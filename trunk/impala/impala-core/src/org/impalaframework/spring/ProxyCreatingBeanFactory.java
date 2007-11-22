@@ -94,7 +94,7 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 	@Override
 	public void preInstantiateSingletons() throws BeansException {
 		if (logger.isInfoEnabled()) {
-			logger.info("Pre-instantiating singletons in factory [" +[" + this + "]");
+			logger.info("Pre-instantiating singletons in factory [" + this + "]");
 		}
 
 		String[] beanNames = this.getBeanDefinitionNames();
