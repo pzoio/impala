@@ -94,15 +94,15 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 	@Override
 	public void preInstantiateSingletons() throws BeansException {
 		if (logger.isInfoEnabled()) {
-			logger.info("Pre-instantiating singletons in factory [" + this + "]");
+			logger.info("Pre-instantiating singletons in factory [" +[" + this + "]");
 		}
 
 		String[] beanNames = this.getBeanDefinitionNames();
 
 		for (int i = 0; i < beanNames.length; i++) {
 			String beanName = beanNames[i];
-			if (!containsSingleton(beanName) && containsBeanDefinition(beanName)) {
-				RootBeanDefinition bd = getMergedBeanDefinition(beanName, false);
+			if (!containsSingleton(beanName) && containsBeanD
+				RootBeanDefinition bd = getMergedBeanDefinition(beanNamefinition(beanName, false);
 				if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 					Class beanClass = resolveBeanClass(bd, beanName);
 					if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
@@ -111,8 +111,4 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 					else {
 						getBean(beanName);
 					}
-				}
-			}
-		}
-	}
-}
+	
