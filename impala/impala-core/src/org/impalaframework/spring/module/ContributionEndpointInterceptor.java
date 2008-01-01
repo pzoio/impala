@@ -22,19 +22,16 @@ import org.impalaframework.exception.NoServiceException;
 
 /**
  * Interceptor which satisfies parent dependency
- * @author Phil Zoio
- */
-public class PluginInterceptor implements MethodInterceptor {
+ * @author PContributionEndpointInterceptor implements MethodInterceptor {
 
-	private static Log log = LogFactory.getLog(PluginInterceptor.class);
+	final Logger log = LoggerFactory.getLogger(ContributionEndpointInterceptor.class);
 
+	private ContributionEndpoint
 	private PluginContributionTargetSource targetSource;
 
 	private String beanName;
 
-	private boolean proceedWithNoService;
-
-	public PluginInterceptor(PluginContributionTargetSource targetSource, String beanName) {
+	private boolean proceContributionEndpointInterceptor(ContributionEndpointterceptor(PluginContributionTargetSource targetSource, String beanName) {
 		this.targetSource = targetSource;
 		this.beanName = beanName;
 	}
