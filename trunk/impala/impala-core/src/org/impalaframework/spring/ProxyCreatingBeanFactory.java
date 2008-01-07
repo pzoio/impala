@@ -103,7 +103,7 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 			String beanName = beanNames[i];
 			if (!containsSingleton(beanName) && containsBeanD
 				RootBeanDefinition bd = getMergedBeanDefinition(beanNamefinition(beanName, false);
-				if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+				if (!bd.isAbstract() && bd.isSingleton() && !bd.isL<?>azyInit()) {
 					Class beanClass = resolveBeanClass(bd, beanName);
 					if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
 						getBean(FACTORY_BEAN_PREFIX + beanName);
