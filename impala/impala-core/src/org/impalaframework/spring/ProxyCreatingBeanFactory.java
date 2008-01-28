@@ -72,7 +72,6 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 			proxyDefinition.getPropertyValues().addPropertyValue("proxyInterfaces", interfaceName);
 
 			bdr.registerBeanDefinition(beanName, proxyDefinition);
-
 			return proxyDefinition;
 
 		}
