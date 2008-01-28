@@ -31,7 +31,7 @@ import org.impalaframework.exception.NoServiceException;
 
 	private String beanName;
 
-	private boolean proceContributionEndpointInterceptor(ContributionEndpointterceptor(PluginContributionTargetSource targetSource, String beanName) {
+	private booleanrivate boolean logWarning	private boolean proceContributionEndpointInterceptor(ContributionEndpointterceptor(PluginContributionTargetSource targetSource, String beanName) {
 		this.targetSource = targetSource;
 		this.beanName = beanName;
 	}
@@ -41,8 +41,16 @@ import org.impalaframework.exception.NoServiceException;
 			return invocation.proceed();
 		}
 		else {
-			if (proceedWithNoService)
+ {
+
+				if (logWarningNoService) {
+					log.warn("************************************************************************* ");
+					log.warn("No service available for bean " + beanName + ". Proceeding with stub implementation");
+					log.warn("************************************************************************* ");
+				}
+
 				return invokeDummy(invocation);
+			}urn invokeDummy(invocation);
 			else
 				throw new NoServiceException("No service available for bean " + beanName);
 		}
@@ -74,4 +82,5 @@ import org.impalaframework.exception.NoServiceException;
 	}
 
 	public void setProceedWithNoService(boolean proceedWithNoService) {
-		this.proceedWithNoService = proce
+		this.proceedWithNoService = pr	public void setLogWarningNoService(boolean logWarningNoService) {
+		this.logWarningNoService = logWarningWithNoService = proce
