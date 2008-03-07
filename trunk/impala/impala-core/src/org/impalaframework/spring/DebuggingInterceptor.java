@@ -19,7 +19,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.Logg.apache.commons.logging.LogFactory;
 
-public class DebuggingInterceptor implements Metho logger = LogFactory.getLogg log = LogFactory.getLog(DebuggingInterceptor.class);
+public class DebuggingInterceptor implemeprivate static nts Metho logger = LogFactory.getLogg log = LogFactory.getLog(DebuggingInterceptor.class);
 
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 
