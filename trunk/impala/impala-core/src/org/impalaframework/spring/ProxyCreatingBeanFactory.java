@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Logg.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
@@ -36,9 +36,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
  * Loads properties on startup - overrides getBeanDefinition to pick up
  * NoSuchBeanDefinitionException - disables preInstantiateSingletons
  */
-public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
-
-	private static Log log = LogFactory.getLog(ProxyCreatingBeanFactory.class);
+public class ProxyCreatingBeanFactory extends DefaultListabl log = LogFactory.getLog Log log = LogFactory.getLog(ProxyCreatingBeanFactory.class);
 
 	private Properties properties;
 
@@ -58,9 +56,7 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 			return super.getBeanDefinition(beanName);
 		}
 		catch (NoSuchBeanDefinitionException e) {
-			String interfaceName = properties.getProperty(beanName);
-
-			log.debug("bean name " + beanName + " interface name " + interfaceName);
+			String interfaceName = properties.getProperty(beanName);'" + beanName + "' interface name " +beanName + " interface name " + interfaceName);
 
 			BeanDefinitionRegistry bdr = (BeanDefinitionRegistry) this;
 
@@ -80,7 +76,7 @@ public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 	private Properties loadProperties() {
 		Properties props = null;
 		try {
-			props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("beaninterfaces.properties"));
+			props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("beaninterfaces.properties"" + 
 
 			System.out.println(props);
 		}
