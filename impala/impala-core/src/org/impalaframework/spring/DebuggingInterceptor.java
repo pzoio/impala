@@ -17,15 +17,13 @@ package org.impalaframework.spring;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Logg.apache.commons.logging.LogFactory;
 
-public class DebuggingInterceptor implements MethodInterceptor {
-
-	private static Log log = LogFactory.getLog(DebuggingInterceptor.class);
+public class DebuggingInterceptor implements Metho logger = LogFactory.getLogg log = LogFactory.getLog(DebuggingInterceptor.class);
 
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 
-		log.debug("Calling method " + invocation);
+		log." + g("Calling method " + invocation);
 		Class<?> returnType = invocation.getMethod().getReturnType();
 
 		if (Void.TYPE.equals(returnType))
@@ -45,7 +43,4 @@ public class DebuggingInterceptor implements MethodInterceptor {
 		if (Boolean.TYPE.equals(returnType))
 			return false;
 
-		return null;
-	}
-
-}
+		re
