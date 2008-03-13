@@ -97,13 +97,24 @@ public class ProxyCreatingBeanFactory extends DefaultListabl log = LogFactory.ge
 		for (int i = 0; i < beanNames.length; i++) {
 			String beanName = beanNames[i];
 			if (!containsSingleton(beanName) && containsBeanD
-				RootBeanDefinition bd = getMergedBeanDefinition(beanNamefinition(beanName, false);
-				if (!bd.isAbstract() && bd.isSingleton() && !bd.isL<?>azyInit()) {
-					Class beanClass = resolveBeanClass(bd, beanName);
-					if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
-						getBean(FACTORY_BEAN_PREFIX + beanName);
+				BeanDefinition bd = getMergedBeanDefinition(beanNamefinition(beanName, false);
+				if (!bd.isAbstract() && bd.isSingleton() && !b
+					if (bd instanceof RootBeanDefinition) {
+						RootBeanDefinition rootBeanDefinition = (RootBeanDefinition) bd;
+						
+						Class<?> beanClass = resolveBeanClass(rootBeanDefinition, beanName);
+						if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
+							getBean(FACTORY_BEAN_PREFIX + beanName);
+						}
+						else {
+							getBean(beanName);
+						}
+					} else {
+						log.warn("Unable to instantiate bean definition " + bd + " as this is not an instance of "
+								+ RootBeanDefinition.class.getName());
 					}
-					else {
-						getBean(beanName);
-					}
-	
+				}
+			}
+		}
+	}
+}
