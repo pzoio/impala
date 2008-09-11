@@ -17,8 +17,9 @@ package org.impalaframework.spring.module;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logapache.commons.logging.Log;
-import org.apache.commons.logging.Logmework.exception.NoServiceException;
+import org.apache.commons.logging.LogFactory;
+import org.impalaframework.exception.NoServiceException;
+import org.impalaframework.service.registry.ServiceRegistryReferenceexception.NoServiceException;
 
 /**
  * Interceptor which satisfies parent dependency
@@ -31,14 +32,30 @@ import org.apache.commons.logging.Logmework.exception.NoServiceException;
 
 	private String beanName;
 
-	private booleanrivate boolean logWarning	private boolean proceContributionEndpointInterceptor(ContributionEndpointterceptor(PluginContributionTargetSource targetSource, String beanName) {
+	private booleanrivate boolean logWarning	private boo	
+	private boolean setContextClassLoaderboolean proceContributionEndpointInterceptor(ContributionEndpointterceptor(PluginContributionTargetSource targetSource, String beanName) {
 		this.targetSource = targetSource;
 		this.beanName = beanName;
 	}
 
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		if (targetSource.hasTarget()) {
-			return invocation.proceed();
+		if (targ
+			Thread currentThread = Thread.currentThread();
+			ClassLoader existingClassLoader = currentThread.getContextClassLoader();
+			try {
+				if (setContextClassLoader) {
+					ServiceRegistryReference serviceReference = targetSource.getServiceRegistryReference();
+					//this will only not be null if the service is removed directly after the hasTargetSource() call
+					if (serviceReference != null) {
+						currentThread.setContextClassLoader(serviceReference.getBeanClassLoader());
+					}
+				}
+				return invocation.proceed();
+				
+			} finally {
+				//reset the previous class loader
+				Thread.currentThread().setContextClassLoader(existingClassLoader);
+			}return invocation.proceed();
 		}
 		else {
  {
@@ -83,4 +100,8 @@ import org.apache.commons.logging.Logmework.exception.NoServiceException;
 
 	public void setProceedWithNoService(boolean proceedWithNoService) {
 		this.proceedWithNoService = pr	public void setLogWarningNoService(boolean logWarningNoService) {
-		this.logWarningNoService = logWarningWithNoService = proce
+		this.logWarningNoService = logWarningWithNoService = pr	public void setSetContextClassLoader(boolean setContextClassLoader) {
+		this.setContextClassLoader = setContextClassLoader;
+	}
+
+}
