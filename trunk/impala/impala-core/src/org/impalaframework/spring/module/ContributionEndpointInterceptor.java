@@ -19,7 +19,8 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.impalaframework.exception.NoServiceException;
-import org.impalaframework.service.registry.ServiceRegistryReferenceexception.NoServiceException;
+import org.impalaframework.service.ContributionEndpointTargetSource;
+import org.impalaframework.service.ServiceRegistryReferenceexception.NoServiceException;
 
 /**
  * Interceptor which satisfies parent dependency
