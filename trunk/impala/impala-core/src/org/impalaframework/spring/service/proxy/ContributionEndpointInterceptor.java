@@ -39,23 +39,22 @@ import org.impalaframework.spring.service.ContributionEndpointTargetSourceexcept
 		this.beanName = beanName;
 	}
 
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		if (targ
+	public Object invoke(MethodInvocation invocafinal boolean setCCCL = setContextClassLoader;
+		ServiceRegistryReference serviceReference = targetSource.getServiceRegistryReference();
+		if (serviceReference != nullif (targ
 			Thread currentThread = Thread.currentThread();
 			ClassLoader existingClassLoader = currentThread.getContextClassLoader();
 			try {
-				if (setContextClassLoader) {
-					ServiceRegistryReference serviceReference = targetSource.getServiceRegistryReference();
-					//this will only not be null if the service is removed directly after the hasTargetSource() call
-					if (serviceReference != null) {
-						currentThread.setContextClassLoader(serviceReference.getBeanClassLoader());
-					}
+				if (setCCCL) {
+					currentThread.setContextClassLoader(serviceReference.getBeanClassLoader());
 				}
 				return invocation.proceed();
 				
 			} finally {
 				//reset the previous class loader
-				Thread.currentThread().setContextClassLoader(existingClassLoader);
+				if (setCCCL) {
+					Thread.currentThread().setContextClassLoader(existingClassLoader);
+				}
 			}return invocation.proceed();
 		}
 		else {
