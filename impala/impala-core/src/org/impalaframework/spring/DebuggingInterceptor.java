@@ -17,30 +17,35 @@ package org.impalaframework.spring;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.Logg.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.LogFactory;
 
-public class DebuggingInterceptor implemeprivate static nts Metho logger = LogFactory.getLogg log = LogFactory.getLog(DebuggingInterceptor.class);
+public class DebuggingInterceptor implements MethodInterceptor {
 
-	public Object invoke(MethodInvocation invocation) throws Throwable {
+    private static final Log logger = LogFactory.getLog(DebuggingInterceptor.class);
 
-		log." + g("Calling method " + invocation);
-		Class<?> returnType = invocation.getMethod().getReturnType();
+    public Object invoke(MethodInvocation invocation) throws Throwable {
 
-		if (Void.TYPE.equals(returnType))
-			return null;
-		if (Byte.TYPE.equals(returnType))
-			return (byte) 0;
-		if (Short.TYPE.equals(returnType))
-			return (short) 0;
-		if (Integer.TYPE.equals(returnType))
-			return (int) 0;
-		if (Long.TYPE.equals(returnType))
-			return 0L;
-		if (Float.TYPE.equals(returnType))
-			return 0f;
-		if (Double.TYPE.equals(returnType))
-			return 0d;
-		if (Boolean.TYPE.equals(returnType))
-			return false;
+        logger.debug("Calling method " +  invocation);
+        Class<?> returnType = invocation.getMethod().getReturnType();
 
-		re
+        if (Void.TYPE.equals(returnType))
+            return null;
+        if (Byte.TYPE.equals(returnType))
+            return (byte) 0;
+        if (Short.TYPE.equals(returnType))
+            return (short) 0;
+        if (Integer.TYPE.equals(returnType))
+            return (int) 0;
+        if (Long.TYPE.equals(returnType))
+            return 0L;
+        if (Float.TYPE.equals(returnType))
+            return 0f;
+        if (Double.TYPE.equals(returnType))
+            return 0d;
+        if (Boolean.TYPE.equals(returnType))
+            return false;
+
+        return null;
+    }
+
+}

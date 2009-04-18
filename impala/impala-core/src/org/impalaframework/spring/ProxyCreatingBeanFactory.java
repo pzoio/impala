@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.Logg.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
@@ -33,88 +33,98 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 /**
- * Loads properties on startup - overrides getBeanDefinition to pick up
- * NoSuchBeanDefinitionException - disables preInstantiateSingletons
+ * Loads properties on startup - overrides getBeanDefinition to pick upetBeanDefinition to pick up
+ * NoSuchBeanDefinitionException - disab
  */
-public class ProxyCreatingBeanFactory extends DefaultListabl log = LogFactory.getLog Log log = LogFactory.getLog(ProxyCreatingBeanFactory.class);
+public class ProxyCreatingBeanFactory extends DefaultListableBeanFactory {
 
-	private Properties properties;
+    final Log log = LogFactory.getLog(ProxyCreatingBeanFactory.class);
 
-	public ProxyCreatingBeanFactory() {
-		super();
-		properties = loadProperties();
-	}
+    private Properties properties;
 
-	public ProxyCreatingBeanFactory(BeanFactory parentBeanFactory) {
-		super(parentBeanFactory);
-		properties = loadProperties();
-	}
+    public ProxyCreatingBeanFactory() {
+        super();
+        properties = loadProperties();
+    }
 
-	@Override
-	public BeanDefinition getBeanDefinition(String beanName) throws NoSuchBeanDefinitionException {
-		try {
-			return super.getBeanDefinition(beanName);
-		}
-		catch (NoSuchBeanDefinitionException e) {
-			String interfaceName = properties.getProperty(beanName);'" + beanName + "' interface name " +beanName + " interface name " + interfaceName);
+    public ProxyCreatingBeanFactory(BeanFactory parentBeanFactory) {
+        super(parentBeanFactory);
+        properties = loadProperties();
+    }
 
-			BeanDefinitionRegistry bdr = (BeanDefinitionRegistry) this;
-
-			RootBeanDefinition interceptorDefinition = new RootBeanDefinition(DebuggingInterceptor.class);
-			bdr.registerBeanDefinition(beanName + "_interceptor", interceptorDefinition);
-
-			RootBeanDefinition proxyDefinition = new RootBeanDefinition(ProxyFactoryBean.class);
-			proxyDefinition.getPropertyValues().addPropertyValue("interceptorNames", beanName + "_interceptor");
-			proxyDefinition.getPropertyValues().addPropertyValue("proxyInterfaces", interfaceName);
-
-			bdr.registerBeanDefinition(beanName, proxyDefinition);
-			return proxyDefinition;
-
-		}
-	}
-
-	private Properties loadProperties() {
-		Properties props = null;
-		try {
-			props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("beaninterfaces.properties"" + 
-
-			System.out.println(props);
-		}
-		catch (IOException e1) {
-			throw new BeanCreationException("Unable to load properties file beaninterfaces.properties", e1);
-		}
-		return props;
+    @Override
+    ties();
 	}
 
 	@Override
-	public void preInstantiateSingletons() throws BeansException {
-		if (logger.isInfoEnabled()) {
-			logger.info("Pre-instantiating singletons in factory [" + this + "]");
-		}
+	public BeanDefinition getBeanDefinition(String beanName) throws NoS
+        try {
+            return super.getBeanDefinition(beanName);
+        }
+        catch (NoSuchBeanDefinitionException e) {
+            String interfaceName = properties.getProperty(beanName);
 
-		String[] beanNames = this.getBeanDefinitionNames();
+            etProperty(beanName);'" + beanName + "' interface name " +beanName + " int
 
-		for (int i = 0; i < beanNames.length; i++) {
-			String beanName = beanNames[i];
-			if (!containsSingleton(beanName) && containsBeanD
-				BeanDefinition bd = getMergedBeanDefinition(beanNamefinition(beanName, false);
-				if (!bd.isAbstract() && bd.isSingleton() && !b
-					if (bd instanceof RootBeanDefinition) {
-						RootBeanDefinition rootBeanDefinition = (RootBeanDefinition) bd;
-						
-						Class<?> beanClass = resolveBeanClass(rootBeanDefinition, beanName);
-						if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
-							getBean(FACTORY_BEAN_PREFIX + beanName);
-						}
-						else {
-							getBean(beanName);
-						}
-					} else {
-						log.warn("Unable to instantiate bean definition " + bd + " as this is not an instance of "
-								+ RootBeanDefinition.class.getName());
-					}
-				}
-			}
-		}
-	}
+            BeanDefinitionRegistry bdr = (BeanDefinitionRegistry) this;
+
+            RootBeanDefinition interceptorDefinition = new RootBeanDefinition(DebuggingInterceptor.class);
+            bdr.registerBeanDefinition(beanName + "_interceptor", interceptorDefinition);
+
+            RootBeanDefinition proxyDefinition = new RootBeanDefinition(ProxyFactoryBean.class);
+            n(ProxyFactoryBean.class);
+			proxyDefinition.getPropertyValues().addPropertyValue("interceptorName
+            proxyDefinition.getPropertyValues().addPropertyValue("proxyInterfaces", interfaceName);
+
+            bdr.registerBeanDefinition(beanName, proxyDefinition);
+
+            return proxyDefinition;
+        }
+    }
+
+    private Properties loadProperties() {
+        Properties props = null;
+        try {
+            props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("beaninterfaces.properties"));
+            log.debug("Properties: " +  props);
+        }
+        catch (IOException e1) {
+            throw new BeanCreationException("Unable to load properties file beaninterfaces.properties", e1);
+        }
+        return props;
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+        if (logger.isInfoEnabled()) {
+            logger.info("Pre-instantiating singletons in factory [" + this + "]");
+        }
+
+        String[] beanNames = this.getBeanDefinitionNames();
+
+        for (int i = 0; i < beanNames.length; i++) {
+            String beanName = beanNames[i];
+            if (!containsSingleton(beanName) && containsBeanDefinition(beanName)) {
+
+                BeanDefinition bd = getMergedBeanDefinition(beanName);
+                if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+                    
+                    if (bd instanceof RootBeanDefinition) {
+                        RootBeanDefinition rootBeanDefinition = (RootBeanDefinition) bd;
+                        
+                        Class<?> beanClass = resolveBeanClass(rootBeanDefinition, beanName);
+                        if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
+                            getBean(FACTORY_BEAN_PREFIX + beanName);
+                        }
+                        else {
+                            getBean(beanName);
+                        }
+                    } else {
+                        log.warn("Unable to instantiate bean definition " + bd + " as this is not an instance of "
+                                + RootBeanDefinition.class.getName());
+                    }
+                }
+            }
+        }
+    }
 }
