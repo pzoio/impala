@@ -1,0 +1,5 @@
+  * [Part one - setting up an Impala project](GettingStartedPart1.md)
+  * [Part two - understanding a simple application](GettingStartedPart2.md)
+  * [Part three - understanding the testing environment](GettingStartedPart3.md)
+  * [Part four - understanding a web application](GettingStartedPart4.md)
+  * [Part five - building and deploying](GettingStartedPart5.md)
